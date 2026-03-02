@@ -1,3 +1,14 @@
+Пивной напиток безалкогольный, состав: Меркушев Владислав, Бородавко Сергей, Вербицкий Александр
+
+ChainID: 11155111 (Seploia)
+
+Рецепт своей монеты по шагам:
+    1. 
+    2. 
+
+Контракт(EtherScan):
+----
+
 REMIX DEFAULT WORKSPACE
 
 Remix default workspace is present when:
