@@ -8,9 +8,14 @@
 			{
 				"inputs": [
 					{
-						"internalType": "address",
-						"name": "initialOwner",
-						"type": "address"
+						"internalType": "string",
+						"name": "name",
+						"type": "string"
+					},
+					{
+						"internalType": "string",
+						"name": "symbol",
+						"type": "string"
 					}
 				],
 				"stateMutability": "nonpayable",
@@ -514,11 +519,11 @@
 			]
 		},
 		"contracts/CryptoScam_2_0.sol": {
-			"keccak256": "0x3146e8a9a5c60c37c56291192c7563a8f9f1dbfcd1ca381b5c222aa07a89844c",
+			"keccak256": "0x36c59083a8fc65c7423fa3fc4aa608d3beffbb25c713f5ebe65e66e2162b00c7",
 			"license": "UNLICENSED",
 			"urls": [
-				"bzz-raw://2687f8c9509b008691a4de219711089a4ba62e6c25995168bb4f9883f4750b91",
-				"dweb:/ipfs/QmRoDNnA4MjvoZysK11p6jAuCrHviSW2VNte3ctTbENBwD"
+				"bzz-raw://d21604f3d5e34a66f91a898cc05f311405663d8baadccc92224908c992533b4b",
+				"dweb:/ipfs/QmXn7NJtTtu3zEwD4tgKgt6UfDDL86tHKb4ABcQM58Ri5v"
 			]
 		}
 	},

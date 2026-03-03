@@ -6,10 +6,10 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract CryptoScam_2_0 is ERC20 {
     address private _owner;
-    constructor(address initialOwner, string name, string symbol) 
+    constructor(string memory name, string memory symbol) 
         ERC20(name,symbol) 
     {
-        _owner = initialOwner;
+        _owner = msg.sender;
         _mint(msg.sender, 1000);
     }
 
