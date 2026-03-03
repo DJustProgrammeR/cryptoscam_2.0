@@ -8,6 +8,7 @@ ChainID: 11155111 (Seploia)
     3. В тестовой VM Remix IDE погоняли транзакции перед релизом в Sepolia
 
 Контракт(EtherScan):
+
 ----
 
 REMIX DEFAULT WORKSPACE
