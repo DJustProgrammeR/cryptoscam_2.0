@@ -3,11 +3,15 @@
 ChainID: 11155111 (Seploia)
 
 Рецепт своей монеты по шагам:  
+    0. Metamask, создали кошельки, нагнали монет в Sepolia https://cloud.google.com/application/web3/faucet/ethereum/sepolia
     1. Подтянули abstract contract ERC20, немного изучили solidity  
     2. Реализовали запрошенный функционал  
-    3. В тестовой VM Remix IDE погоняли транзакции перед релизом в Sepolia  
+    3. В тестовой VM Remix IDE погонял транзакции перед релизом в Sepolia  
+    4. Создал EtherScan акк, скопировал API ключ, подключился к сети Sepolia, раскатил и верифицировал контракт в etherscan
+    5. Погоняли транзакции https://sepolia.etherscan.io/token/0x50954724f65e329bd50f0cff07b576d9acd1cb2e
+    6. Успех!
 
-Контракт(EtherScan):
+Контракт(EtherScan): https://sepolia.etherscan.io/token/0x50954724f65e329bd50f0cff07b576d9acd1cb2e#code
 
 ----
 
