@@ -1,5 +1,6 @@
 import { defineConfig } from "hardhat/config";
 import hardhatVerify from "@nomicfoundation/hardhat-verify";
+import hardhatEthers from "@nomicfoundation/hardhat-ethers";
 
 import * as dotenv from "dotenv";
 dotenv.config();
@@ -8,6 +9,7 @@ dotenv.config();
 export default defineConfig({
   plugins: [
     hardhatVerify,
+    hardhatEthers
   ],
   solidity: {
     version: "0.8.28",
@@ -16,7 +18,7 @@ export default defineConfig({
         enabled: true,
         runs: 200
       }
-    }
+    },
   },
   networks: {
     sepolia: {
@@ -30,5 +32,13 @@ export default defineConfig({
     etherscan: {
       apiKey: process.env.ETHERSCAN_API_KEY || ""
     }
-  }
+  },
+  paths: {
+    sources: [
+      "./contracts"
+    ],
+    tests: "./test",
+    cache: "./cache",
+    artifacts: "./artifacts",
+  },
 });
