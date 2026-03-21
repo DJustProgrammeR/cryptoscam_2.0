@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { ethers } from "ethers";
+import toast, { Toaster } from 'react-hot-toast';
 import "./App.css";
 
 const GOVERNOR = "0xCaB5aF8713c3dF02c6a3cfb285B483EfB774F475";
@@ -157,7 +158,7 @@ export default function App() {
 
             setTotalProposals(parsed.length);
             setProposals(parsed.reverse());
-        } catch {
+        } catch (err: any) {
             console.error("Error loading proposals:", err);
             setProposals([]);
         }
@@ -169,7 +170,7 @@ export default function App() {
             const tx = await token.mint(account, ethers.parseEther("10"));
             await tx.wait();
             await loadBalance(token, account);
-            alert("Mint успешно выполнен!");
+            toast.success("Mint 10SCM прошёл успешно");
         } catch (err: any) {
             console.error("Mint error:", err);
             setError(err.message || "Ошибка при mint");
@@ -183,8 +184,8 @@ export default function App() {
             setLoading(true);
             const tx = await token.delegate(account);
             await tx.wait();
-            await checkDelegation(tok, addr);
-            alert("Делегировано успешно!");
+            await checkDelegation(token, account);
+            toast.success("Теперь вы можете голосовать!")
         } catch (err: any) {
             console.error("Delegate error:", err);
             setError(err.message || "Ошибка при делегировании");
@@ -210,7 +211,7 @@ export default function App() {
             await loadBalance(token, account);
             setTransferTo("");
             setTransferAmount("");
-            alert("Перевод успешно выполнен!");
+            toast.success("Перевод успешно выполнен")
         } catch (err: any) {
             console.error("Transfer error:", err);
             setError(err.message || "Ошибка при переводе");
@@ -234,13 +235,13 @@ export default function App() {
     };
 
     const canVote = (state: number, hasVoted: boolean) => {
-        return state === 1 && !hasVoted;
+        return Number(state) === 1 && !hasVoted;
     };
 
     const getVotingStatusMessage = (state: number, hasVoted: boolean) => {
         if (hasVoted) return "Вы уже проголосовали";
-        if (state == 0) return `Голосование ещё не началось`;
-        if (state !== 1) return `Голосование уже закончилось`;
+        if (Number(state) == 0) return `Голосование ещё не началось`;
+        if (Number(state) !== 1) return `Голосование уже закончилось`;
         return "";
     };
 
@@ -256,7 +257,7 @@ export default function App() {
             await tx.wait();
             await loadProposals(governor);
             setProposalDesc("");
-            alert("Предложение создано!");
+            toast.success("Предложение создано")
         } catch (err: any) {
             console.error("Create proposal error:", err);
             setError(err.message || "Ошибка при создании предложения");
@@ -271,7 +272,7 @@ export default function App() {
             const tx = await governor.castVote(id, type);
             await tx.wait();
             await loadProposals(governor);
-            alert(`Голос ${type === 1 ? "ЗА" : "ПРОТИВ"} учтен!`);
+            toast.success(`Голос ${type === 1 ? "ЗА" : "ПРОТИВ"} учтён`)
         } catch (err: any) {
             console.error("Vote error:", err);
             setError(err.message || "Ошибка при голосовании");
@@ -302,6 +303,26 @@ export default function App() {
     if (!isConnected) {
         return (
             <div className="app">
+                <Toaster
+                    position="top-right"
+                    toastOptions={{
+                        duration: 4000,
+                        style: {
+                            background: '#363636',
+                            color: '#fff',
+                        },
+                        success: {
+                            style: {
+                                background: '#10b981',
+                            },
+                        },
+                        error: {
+                            style: {
+                                background: '#ef4444',
+                            },
+                        },
+                    }}
+                />
                 <h1>🚀 DAO</h1>
                 {error && <div className="error">{error}</div>}
                 <button onClick={() => connect()} disabled={loading}>
@@ -313,6 +334,26 @@ export default function App() {
 
     return (
         <div className="app">
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    duration: 4000,
+                    style: {
+                        background: '#363636',
+                        color: '#fff',
+                    },
+                    success: {
+                        style: {
+                            background: '#10b981',
+                        },
+                    },
+                    error: {
+                        style: {
+                            background: '#ef4444',
+                        },
+                    },
+                }}
+            />
             <div className="container">
                 <h1>🚀 Cryptoscam 2.1 DAO</h1>
 
@@ -334,7 +375,7 @@ export default function App() {
                     )}
 
                     <button onClick={requestMoney} className="telegram">
-                        Попросить милостыню
+                        Попросить токенов
                     </button>
 
                     {!isDelegated && (
