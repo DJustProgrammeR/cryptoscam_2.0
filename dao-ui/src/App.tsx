@@ -20,7 +20,8 @@ const tokenAbi = [
     "function mint(address to, uint256 amount)",
     "function delegate(address)",
     "function balanceOf(address) view returns (uint256)",
-    "function transfer(address to, uint256 amount)"
+    "function transfer(address to, uint256 amount)",
+    "function delegates(address) view returns (address)"
 ];
 
 export default function App() {
@@ -37,6 +38,7 @@ export default function App() {
     const [isConnected, setIsConnected] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState("");
+    const [isDelegated, setIsDelegated] = useState(false);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(5);
@@ -92,6 +94,7 @@ export default function App() {
 
             await loadBalance(tok, addr);
             await loadProposals(gov);
+            await checkDelegation(tok, addr);
 
         } catch (err: any) {
             setError(err.message || "Ошибка подключения");
@@ -107,6 +110,16 @@ export default function App() {
             setBalance(ethers.formatEther(raw));
         } catch (err) {
             setBalance("0");
+        }
+    };
+
+    const checkDelegation = async (tok: any, addr: string) => {
+        try {
+            const delegateAddress = await tok.delegates(addr);
+            setIsDelegated(delegateAddress === addr);
+        } catch (err) {
+            console.error("Error checking delegation:", err);
+            setIsDelegated(false);
         }
     };
 
@@ -170,6 +183,7 @@ export default function App() {
             setLoading(true);
             const tx = await token.delegate(account);
             await tx.wait();
+            await checkDelegation(tok, addr);
             alert("Делегировано успешно!");
         } catch (err: any) {
             console.error("Delegate error:", err);
@@ -305,8 +319,11 @@ export default function App() {
                 {error && <div className="error">{error}</div>}
 
                 <div className="card">
-                    <p><b>Адрес:</b><br />{account}</p>
+                    <p><b>Адрес:</b> {account}</p>
                     <p><b>Баланс:</b> {balance} SCM</p>
+                    {isDelegated && (
+                        <p className="delegated-info">✓ Голоса делегированы себе</p>
+                    )}
                 </div>
 
                 <div className="card">
@@ -317,12 +334,14 @@ export default function App() {
                     )}
 
                     <button onClick={requestMoney} className="telegram">
-                        Need tokens
+                        Попросить милостыню
                     </button>
 
-                    <button onClick={delegate}>
-                        Delegate
-                    </button>
+                    {!isDelegated && (
+                        <button onClick={delegate}>
+                            Делегировать себе голоса
+                        </button>
+                    )}
                 </div>
 
                 <div className="card">
